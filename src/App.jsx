@@ -1,5 +1,11 @@
+import Header from './Header'
+import MainComponent from './MainComponent'
+
 export default function App(){
   return(
-    <h1>Hello</h1>
+    <div className="topmost-container">
+      <Header />
+      <MainComponent />
+    </div>
   )
 }
