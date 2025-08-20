@@ -44,7 +44,7 @@ body{
 }
 .dice-container{
     display: grid;
-    grid-template: repeat(2,1fr)/repeat(3,1fr);
+    grid-template: repeat(2,1fr)/repeat(5,1fr);
     gap:1rem;
     padding-left: 3rem;
     padding-right: 3rem;
