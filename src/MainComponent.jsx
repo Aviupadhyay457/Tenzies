@@ -10,6 +10,7 @@ export default function MainComponent(props){
     // const[time , props.setTime]=React.useState(0)
     const[shouldRunTimer, SetShouldRunTimer]=React.useState(false)
     // const gameWon=dice.every(die=>die.isHeld===true && die.value===dice[0].value)
+    let diceRollAudio = new Audio(multipleSound)
 
     React.useEffect(()=>{
         if(shouldRunTimer){
@@ -96,6 +97,7 @@ export default function MainComponent(props){
 
         }
         else{
+            diceRollAudio.play()
             props.setDice((oldDice)=>{
                 return oldDice.map((die)=>{
                     if(die.isHeld===true){
@@ -106,7 +108,7 @@ export default function MainComponent(props){
                 })})
 
             props.setCount(props.count+1)
-
+            
             if(shouldRunTimer===false){
                 SetShouldRunTimer(true)
             }

@@ -11,8 +11,7 @@ export default function App(){
   function getInitialDice(){
       return new Array(10).fill(0).map(()=>
           ({  
-              value:6,
-              // value:Math.ceil(Math.random()*6),
+              value:Math.ceil(Math.random()*6),
               id:nanoid(),
               isHeld:false
           })
@@ -23,7 +22,7 @@ export default function App(){
   return(
     <div className="topmost-container">
       <Header count={count} setCount={setCount} time={time} setTime={setTime} gameWon={gameWon}/>
-      
+
       <MainComponent count={count} setCount={setCount} time={time} setTime={setTime}
                      dice={dice} setDice={setDice} getInitialDice={getInitialDice} gameWon={gameWon}/>
     </div>
