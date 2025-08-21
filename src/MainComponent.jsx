@@ -6,14 +6,14 @@ import Confetti from 'react-confetti'
 
 export default function MainComponent(props){
     const[dice,setDice]=React.useState(()=>getInitialDice())
-    const[count,setCount]=React.useState(0)
-    const[time , setTime]=React.useState(0)
+    // const[count,setCount]=React.useState(0)
+    // const[time , props.setTime]=React.useState(0)
     const[shouldRunTimer, SetShouldRunTimer]=React.useState(false)
     const gameWon=dice.every(die=>die.isHeld===true && die.value===dice[0].value)
 
     React.useEffect(()=>{
         if(shouldRunTimer){
-            let timer=setInterval(()=>setTime(oldtime=>oldtime+1),1000)
+            let timer=setInterval(()=>props.setTime(oldtime=>oldtime+1),1000)
             return function(){
                 clearInterval(timer)
             }
@@ -25,9 +25,9 @@ export default function MainComponent(props){
         if(gameWon){
             console.log("it works")
             localStorage.getItem
-            setCount(0)
+            props.setCount(0)
             SetShouldRunTimer(false)
-            setTime(0)
+            props.setTime(0)
         }
 
     },[gameWon])
@@ -112,7 +112,7 @@ export default function MainComponent(props){
                     }
                 })})
 
-            setCount(count+1)
+            props.setCount(props.count+1)
 
             if(shouldRunTimer===false){
                 SetShouldRunTimer(true)
@@ -132,8 +132,8 @@ export default function MainComponent(props){
             </div>
             <button onClick={handleBtnClick}>{gameWon?"New Game":"Roll Dice"}</button>
             <section>
-                <p>Roll:{count}</p>
-                <p>Time:{secondsToHms(time)}</p>
+                <p>Roll:{props.count}</p>
+                <p>Time:{secondsToHms(props.time)}</p>
             </section>
             {gameWon && <Confetti/>}
         </main>
