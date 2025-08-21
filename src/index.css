@@ -37,6 +37,15 @@ body{
 .info-container p{
     width: 300px;
 }
+
+nav{
+    display: flex;
+    justify-content:center;
+}
+nav p{
+    border:1px solid red;
+    width:fit-content;
+}
 .hero-container{
     display: flex;
     flex-direction: column;

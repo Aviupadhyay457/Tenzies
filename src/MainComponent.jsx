@@ -4,7 +4,7 @@ import Die from "./Die"
 import multipleSound from "./assets/mulitple-dice-roll.mp3"
 import Confetti from 'react-confetti'
 
-export default function MainComponent(){
+export default function MainComponent(props){
     const[dice,setDice]=React.useState(()=>getInitialDice())
     const[count,setCount]=React.useState(0)
     const[time , setTime]=React.useState(0)
@@ -24,12 +24,17 @@ export default function MainComponent(){
     React.useEffect(()=>{
         if(gameWon){
             console.log("it works")
+            localStorage.getItem
             setCount(0)
             SetShouldRunTimer(false)
             setTime(0)
         }
 
     },[gameWon])
+
+    React.useEffect(()=>{
+
+        },[])
 
     
     function secondsToHms(d) {
