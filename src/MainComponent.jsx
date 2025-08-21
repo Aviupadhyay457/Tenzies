@@ -5,11 +5,11 @@ import multipleSound from "./assets/mulitple-dice-roll.mp3"
 import Confetti from 'react-confetti'
 
 export default function MainComponent(props){
-    const[dice,setDice]=React.useState(()=>getInitialDice())
+    // const[dice,setDice]=React.useState(()=>getInitialDice())
     // const[count,setCount]=React.useState(0)
     // const[time , props.setTime]=React.useState(0)
     const[shouldRunTimer, SetShouldRunTimer]=React.useState(false)
-    const gameWon=dice.every(die=>die.isHeld===true && die.value===dice[0].value)
+    // const gameWon=dice.every(die=>die.isHeld===true && die.value===dice[0].value)
 
     React.useEffect(()=>{
         if(shouldRunTimer){
@@ -22,19 +22,15 @@ export default function MainComponent(props){
     },[shouldRunTimer])
 
     React.useEffect(()=>{
-        if(gameWon){
+        if(props.gameWon){
             console.log("it works")
-            localStorage.getItem
             props.setCount(0)
             SetShouldRunTimer(false)
             props.setTime(0)
         }
 
-    },[gameWon])
+    },[props.gameWon])
 
-    React.useEffect(()=>{
-
-        },[])
 
     
     function secondsToHms(d) {
@@ -51,27 +47,26 @@ export default function MainComponent(props){
         return hDisplay + mDisplay + sDisplay; 
     }
 
-
     
 
 
 
-    function getInitialDice(){
-        return new Array(10).fill(0).map(()=>
-            ({  
-                value:6,
-                // value:Math.ceil(Math.random()*6),
-                id:nanoid(),
-                isHeld:false
-            })
-        )
-    }
+    // function getInitialDice(){
+    //     return new Array(10).fill(0).map(()=>
+    //         ({  
+    //             value:6,
+    //             // value:Math.ceil(Math.random()*6),
+    //             id:nanoid(),
+    //             isHeld:false
+    //         })
+    //     )
+    // }
 
     function DieToggle(id){
-        if(gameWon){
+        if(props.gameWon){
             return null
         }
-        setDice((oldDice)=>{
+        props.setDice((oldDice)=>{
            return oldDice.map((die)=>{
                 if (die.id===id){
                     return(
@@ -90,20 +85,18 @@ export default function MainComponent(props){
 
     function dieElements(){
         return(
-           dice.map((ele)=>(
+           props.dice.map((ele)=>(
             <Die key={ele.id} id={ele.id} value={ele.value} isHeld={ele.isHeld} dieToggle={DieToggle} />
            )) 
         )
     }
     function handleBtnClick(){
-        
-        
-        if(gameWon){
-            setDice(getInitialDice())
+        if(props.gameWon){
+            props.setDice(props.getInitialDice)
 
         }
         else{
-            setDice((oldDice)=>{
+            props.setDice((oldDice)=>{
                 return oldDice.map((die)=>{
                     if(die.isHeld===true){
                         return die
@@ -130,12 +123,12 @@ export default function MainComponent(props){
             <div className="dice-container">
                 {dieElements()}
             </div>
-            <button onClick={handleBtnClick}>{gameWon?"New Game":"Roll Dice"}</button>
+            <button onClick={handleBtnClick}>{props.gameWon?"New Game":"Roll Dice"}</button>
             <section>
                 <p>Roll:{props.count}</p>
                 <p>Time:{secondsToHms(props.time)}</p>
             </section>
-            {gameWon && <Confetti/>}
+            {props.gameWon && <Confetti/>}
         </main>
     )
 }
