@@ -4,6 +4,7 @@ export default function Navbar(props){
          let lsBestRoll=localStorage.getItem("bestRoll")
           return lsBestRoll ? lsBestRoll : localStorage.setItem("bestRoll",JSON.stringify("0"))
     })
+    
 
 
     return(
