@@ -53,8 +53,9 @@ export default function MainComponent(){
 
     function getInitialDice(){
         return new Array(10).fill(0).map(()=>
-            ({
-                value:Math.ceil(Math.random()*6),
+            ({  
+                value:6,
+                // value:Math.ceil(Math.random()*6),
                 id:nanoid(),
                 isHeld:false
             })
@@ -62,6 +63,9 @@ export default function MainComponent(){
     }
 
     function DieToggle(id){
+        if(gameWon){
+            return null
+        }
         setDice((oldDice)=>{
            return oldDice.map((die)=>{
                 if (die.id===id){
