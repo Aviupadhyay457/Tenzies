@@ -22,9 +22,9 @@ export default function Navbar(props){
         var h = Math.floor(d / 3600);
         var m = Math.floor(d % 3600 / 60);
         var s = Math.floor(d % 3600 % 60);
-        var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-        var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-        var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+        var hDisplay = h > 0 ? h + (h == 1 ? " hr, " : " hrs, ") : "";
+        var mDisplay = m > 0 ? m + (m == 1 ? " m, " : " m's, ") : "";
+        var sDisplay = s > 0 ? s + (s == 1 ? " s" : " s") : "";
         return hDisplay + mDisplay + sDisplay; 
     }
 
@@ -42,10 +42,14 @@ export default function Navbar(props){
         }
     },[props.gameWon])
 
+    let time=secondsToHms(JSON.parse(bestTime))
+    let timeStyle={
+        fontSize:time.length>4?(time.length>11?"1.1rem":"1.5rem"):"2rem",
+    }
     return(
         <nav>
-            <p>Best Roll:{JSON.parse(bestRoll)}</p>
-            <p>Best Time:{secondsToHms(JSON.parse(bestTime))}</p>
+            <p>Best Roll<span className="for-best-roll">{JSON.parse(bestRoll)}</span></p>
+            <p>Best Time:<span className="for-best-time" style={timeStyle}>{time}</span></p>
         </nav>
     )
 }

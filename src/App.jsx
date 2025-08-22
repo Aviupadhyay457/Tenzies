@@ -20,10 +20,10 @@ export default function App(){
   const gameWon=dice.every(die=>die.isHeld===true && die.value===dice[0].value)
 
   return(
-    <div className="topmost-container">
+    <div className={gameWon ? "topmost-container shake-element": "topmost-container"}>
       <Header count={count} setCount={setCount} time={time} setTime={setTime} gameWon={gameWon}/>
 
-      <MainComponent count={count} setCount={setCount} time={time} setTime={setTime}
+      <MainComponent   count={count} setCount={setCount} time={time} setTime={setTime}
                      dice={dice} setDice={setDice} getInitialDice={getInitialDice} gameWon={gameWon}/>
     </div>
   )
