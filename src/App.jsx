@@ -9,6 +9,16 @@ export default function App(){
   const[time , setTime]=React.useState(0)
   
 
+  const [bestRoll,setBestRoll]=React.useState(()=>
+  {
+      return localStorage.getItem("bestRoll")||localStorage.setItem("bestRoll",JSON.stringify(""))
+  })
+
+  const [bestTime,setBestTime]=React.useState(()=>
+  {
+      return localStorage.getItem("bestTime")||localStorage.setItem("bestTime",JSON.stringify(""))
+  })
+
   function getInitialDice(){
       return new Array(10).fill(0).map(()=>
           ({  
@@ -22,7 +32,8 @@ export default function App(){
 
   return(
     <div className={gameWon ? "topmost-container shake-element": "topmost-container"}>
-      <Header count={count} setCount={setCount} time={time} setTime={setTime} gameWon={gameWon}/>
+      <Header count={count} setCount={setCount} time={time} setTime={setTime} gameWon={gameWon} 
+                    bestRoll={bestRoll} bestTime={bestTime} setBestRoll={setBestRoll} setBestTime={setBestTime}/>
 
       <MainComponent   count={count} setCount={setCount} time={time} setTime={setTime}
                      dice={dice} setDice={setDice} getInitialDice={getInitialDice} gameWon={gameWon}/>

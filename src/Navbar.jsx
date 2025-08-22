@@ -5,14 +5,14 @@ export default function Navbar(props){
     //       return lsBestRoll || "0"
     // })
 
-    const [bestRoll,setBestRoll]=React.useState(()=>
-    {
-        return localStorage.getItem("bestRoll")||localStorage.setItem("bestRoll",JSON.stringify(""))
-    })
-        const [bestTime,setBestTime]=React.useState(()=>
-    {
-        return localStorage.getItem("bestTime")||localStorage.setItem("bestTime",JSON.stringify(""))
-    })
+    // const [bestRoll,setBestRoll]=React.useState(()=>
+    // {
+    //     return localStorage.getItem("bestRoll")||localStorage.setItem("bestRoll",JSON.stringify(""))
+    // })
+    //     const [bestTime,setBestTime]=React.useState(()=>
+    // {
+    //     return localStorage.getItem("bestTime")||localStorage.setItem("bestTime",JSON.stringify(""))
+    // })
 
     function secondsToHms(d) {
         if (d===0){
@@ -31,25 +31,25 @@ export default function Navbar(props){
 
     React.useEffect(()=>{
         if(props.gameWon){
-            if(bestRoll>props.count || JSON.parse(bestRoll)===""){
+            if(props.bestRoll>props.count || JSON.parse(props.bestRoll)===""){
                 localStorage.setItem("bestRoll",JSON.stringify(props.count))
-                setBestRoll(localStorage.getItem("bestRoll"))
+                props.setBestRoll(localStorage.getItem("bestRoll"))
             }
-            if(bestTime>props.time || JSON.parse(bestTime)===""){
+            if(props.bestTime>props.time || JSON.parse(props.bestTime)===""){
                 localStorage.setItem("bestTime",JSON.stringify(props.time))
-                setBestTime(localStorage.getItem("bestTime"))
+                props.setBestTime(localStorage.getItem("bestTime"))
             }
         }
     },[props.gameWon])
 
-    let time=secondsToHms(JSON.parse(bestTime))
+    let time=secondsToHms(JSON.parse(props.bestTime))
     let timeStyle={
         fontSize:time.length>4?(time.length>11?"1.1rem":"1.5rem"):"2rem",
 
     }
     return(
         <nav>
-            <p>Best Roll<span className="for-best-roll">{JSON.parse(bestRoll)}</span></p>
+            <p>Best Roll<span className="for-best-roll">{JSON.parse(props.bestRoll)}</span></p>
             <p>Best Time:<span className="for-best-time" style={timeStyle}>{time}</span></p>
         </nav>
     )

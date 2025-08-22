@@ -11,7 +11,8 @@ export default function Header(props){
                 <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.Try to get the fastest time!</p>
             </div>
             <h3>Game Statistics:</h3>
-            <Navbar count={props.count} setCount={props.setCount} time={props.time} setTime={props.setTime} gameWon={props.gameWon}/>
+            <Navbar count={props.count} setCount={props.setCount} time={props.time} setTime={props.setTime} gameWon={props.gameWon}
+                           bestRoll={props.bestRoll} bestTime={props.bestTime} setBestRoll={props.setBestRoll} setBestTime={props.setBestTime}/>
         </header>
        
     )
