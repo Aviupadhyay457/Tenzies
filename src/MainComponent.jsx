@@ -110,6 +110,10 @@ export default function MainComponent(props){
     function handleBtnClick(){
         if(props.gameWon){
             props.setDice(props.getInitialDice)
+            props.setCount(1)
+            props.setTime(0)
+            setProgressBar(0)
+            SetShouldRunTimer(true)
 
         }
         else if(!startGame){
@@ -138,7 +142,7 @@ export default function MainComponent(props){
             fontSize:time.length>4?(time.length>11?"0.4rem":"0.7rem"):"1.5rem",
         }
 
-        
+
         let progressBarFillCss={}
         
         switch (progressBar) {
@@ -168,15 +172,15 @@ export default function MainComponent(props){
         }
     // console.log(dice)
     return(
-        <main className="hero-container">
+        <main className="hero-container" style={{background:startGame?props.gameWon?"linear-gradient(145deg, #d1fae5, #a7f3d0)":"":"#ffffff"}}>
             <div className="begin-game-header">
-                <h2>Ready To Play?</h2>
-                <p>Click Start to Begin Your Tenzies Adventure!</p>
+                <h2>{!startGame?"Ready To Play?":props.gameWon?"Congratulations, All Dice Match!!!":"Roll Your Dice"}</h2>
+                {startGame || <p>Click Start to Begin Your Tenzies Adventure!</p>}
             </div>
             <div className="dice-container">
                 {dieElements()}
             </div>
-            <section className="game-progress" style={{visibility:startGame?"visible":"hidden"}}>
+            <section className="game-progress" style={{visibility:startGame?"visible":"hidden" ,marginBottom:startGame?"":"0px"}}>
                 <div className="roll-current">Roll<span>{props.count}</span></div>
                 <div className="time-current" >Time<span style={timeStyle}>{time}</span></div>
                 <div className="progress-current">
@@ -185,7 +189,7 @@ export default function MainComponent(props){
                     <div className="progress-fill" style={progressBarFillCss}></div>
                 </div>
             </section>
-            <button onClick={handleBtnClick} className="game-btn" >{startGame?props.gameWon?"PLAY AGAIN??":"ROLL DICE":"START GAME"}</button>
+            <button onClick={handleBtnClick} className={startGame?"game-btn ":"game-btn start-game-btn"} >{startGame?props.gameWon?"PLAY AGAIN??":"ROLL DICE":"START GAME"}</button>
             {props.gameWon && <Confetti/>}
         </main>
     )

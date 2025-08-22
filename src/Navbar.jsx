@@ -16,7 +16,7 @@ export default function Navbar(props){
 
     function secondsToHms(d) {
         if (d===0){
-            return "0 second"
+            return "0 s"
         }
         d = Number(d);
         var h = Math.floor(d / 3600);
@@ -45,6 +45,7 @@ export default function Navbar(props){
     let time=secondsToHms(JSON.parse(bestTime))
     let timeStyle={
         fontSize:time.length>4?(time.length>11?"1.1rem":"1.5rem"):"2rem",
+
     }
     return(
         <nav>

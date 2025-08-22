@@ -148,7 +148,7 @@ nav p{
     flex-direction: column;
     justify-content: flex-start;
     grid-column: span 3;
-    background: linear-gradient(to right, #f8fafc, #f1f5f9);
+    background: #ecfeff;;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
     border-radius:1rem;
     padding-left: 1.5rem;
@@ -161,7 +161,7 @@ nav p{
 }
 .begin-game-header h2{
     font-family: "inter",sans-serif;
-    color:#334155;
+    color:#1e293b;
     font-weight: 600;
     line-height: 1;
     text-align: center;
@@ -334,16 +334,23 @@ nav p{
     align-self: center;
     padding: 1rem 1.5rem;
     border-radius: 9999px;
-    background-color: #e53935;
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
     color:#ffffff;
     border:none;
     cursor:pointer;
+    font-size:1rem;
+    font-weight: 700;
 }
 
+/* start Game state css */
 
+.start-game-btn{
+    background: linear-gradient(135deg, #3b82f6, #2563eb)
+}
 
-
-
+.game-won-btn{
+    background:linear-gradient(145deg, #d1fae5, #6ee7b7);
+}
 
 
 
