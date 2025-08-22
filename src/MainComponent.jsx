@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { nanoid } from "nanoid"
 import Die from "./Die"
 import multipleSound from "./assets/mulitple-dice-roll.mp3"
@@ -9,6 +9,8 @@ export default function MainComponent(props){
     // const[count,setCount]=React.useState(0)
     // const[time , props.setTime]=React.useState(0)
     const[shouldRunTimer, SetShouldRunTimer]=React.useState(false)
+    const[startGame, setStarGame]=useState(false)
+    const[progressBar, setProgressBar]=useState(0)
     // const gameWon=dice.every(die=>die.isHeld===true && die.value===dice[0].value)
     let diceRollAudio = new Audio(multipleSound)
 
@@ -25,9 +27,9 @@ export default function MainComponent(props){
     React.useEffect(()=>{
         if(props.gameWon){
             console.log("it works")
-            props.setCount(0)
+            // props.setCount(0)
             SetShouldRunTimer(false)
-            props.setTime(0)
+            // props.setTime(0)
         }
 
     },[props.gameWon])
@@ -36,7 +38,7 @@ export default function MainComponent(props){
     
     function secondsToHms(d) {
         if (d===0){
-            return "0 second"
+            return "0 s"
         }
         d = Number(d);
         var h = Math.floor(d / 3600);
@@ -82,12 +84,14 @@ export default function MainComponent(props){
                 }
             })
         })
+
+        
     }
 
     function dieElements(){
         return(
            props.dice.map((ele)=>(
-            <Die key={ele.id} id={ele.id} value={ele.value} isHeld={ele.isHeld} dieToggle={DieToggle} />
+            <Die key={ele.id} id={ele.id} value={ele.value} isHeld={ele.isHeld} dieToggle={DieToggle} startGame={startGame}/>
            )) 
         )
     }
@@ -95,6 +99,11 @@ export default function MainComponent(props){
         if(props.gameWon){
             props.setDice(props.getInitialDice)
 
+        }
+        else if(!startGame){
+            setStarGame(true)
+            props.setCount(1)
+            SetShouldRunTimer(true)
         }
         else{
             diceRollAudio.play()
@@ -108,28 +117,30 @@ export default function MainComponent(props){
                 })})
 
             props.setCount(props.count+1)
-            
-            if(shouldRunTimer===false){
-                SetShouldRunTimer(true)
-            }
 
             }
         }
         
-
-
+        let time=secondsToHms(props.time)
+        let timeStyle={
+        fontSize:time.length>4?(time.length>11?"0.4rem":"0.7rem"):"1.5rem",
+    }
     // console.log(dice)
     return(
         <main className="hero-container">
-
+            <div className="begin-game-header">
+                <h2>Ready To Play?</h2>
+                <p>Click Start to Begin Your Tenzies Adventure!</p>
+            </div>
             <div className="dice-container">
                 {dieElements()}
             </div>
-            <button onClick={handleBtnClick}>{props.gameWon?"New Game":"Roll Dice"}</button>
-            <section>
-                <p>Roll:{props.count}</p>
-                <p>Time:{secondsToHms(props.time)}</p>
+            <section className="game-progress" style={{visibility:startGame?"visible":"hidden"}}>
+                <p className="roll-current">Roll:<span>{props.count}</span></p>
+                <p className="time-current" >Time:<span style={timeStyle}>{time}</span></p>
+                <p className="progress-current">Progress:<span>3/10</span><div className="progress-fill"></div></p>
             </section>
+            <button onClick={handleBtnClick} className="game-btn" >{startGame?props.gameWon?"PLAY AGAIN??":"ROLL DICE":"START GAME"}</button>
             {props.gameWon && <Confetti/>}
         </main>
     )

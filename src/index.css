@@ -43,6 +43,7 @@ html,body{
    flex-direction: column;
    grid-column: span 2;
    background: linear-gradient(to right, #f1f5f9, #e2e8f0); 
+   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
    border-radius: 1rem;
    padding: 1rem 2rem;
    gap:1rem;
@@ -145,42 +146,103 @@ nav p{
 .hero-container{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     grid-column: span 3;
-    border:1px solid blue;
+    background: linear-gradient(to right, #f8fafc, #f1f5f9);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    border-radius:1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.5rem;
+
 }
+.begin-game-header{
+    margin-bottom: 2rem;
+}
+.begin-game-header h2{
+    font-family: "inter",sans-serif;
+    color:#334155;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+
+}
+.begin-game-header p{
+    font-family: "inter", sans-serif;
+    color:#64748b;
+    font-weight: 400;
+    text-align: center;
+    font-size: 1rem;
+}
+
 .dice-container{
     display: grid;
-    grid-template: repeat(2,1fr)/repeat(5,1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    justify-items: center;
     gap:1rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
-    width:fit-content;
-    height: fit-content;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .die{
+    all: unset; 
+    width: 60px;
+    height: 60px;
     display: grid;
     background-color: grey;
+    justify-items: center; 
+    align-items: center;
     padding: 5px 10px;
     grid-template:repeat(3,1fr)/repeat(3,1fr);
-    gap:10px;
     grid-template-areas: 
     "a . c"
     "d e f"
     "g . i";
+    border-radius: 12px;;
+    background: linear-gradient(145deg, #fefefe, #d1d1d1);
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 0.8),  
+        inset -3px -3px 6px rgba(0, 0, 0, 0.25),    
+        0 4px 8px rgba(0, 0, 0, 0.25);             
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+
+}
+.die:hover {
+    cursor: pointer;
+    transform: rotateX(5deg) rotateY(5deg);
+    box-shadow:
+        inset 2px 2px 4px rgba(255, 255, 255, 0.7),
+        inset -3px -3px 6px rgba(0, 0, 0, 0.2),
+        0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.green{
-    background-color: green;
+.die-selected{
+  background: linear-gradient(145deg, #e53935, #a31515); 
+  box-shadow:
+    inset 2px 2px 4px rgba(255, 255, 255, 0.4),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.4),
+    0 6px 12px rgba(0, 0, 0, 0.35);
 }
 
 .pip{
-    height: 1rem;
-    width: 1rem;
+    display: block;
+    width:14px;
+    aspect-ratio: 1/1;
     border-radius: 50%;
-    background-color:red;
+    background-color: #111;
+    box-shadow:
+    inset 2px 2px 5px rgba(255, 255, 255, 0.2),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.8);
+}
+
+.pip-selected{
+  background: #fff;
+  box-shadow:
+    inset 2px 2px 5px rgba(255, 255, 255, 0.6),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.4);
 }
 
 .pip:nth-child(2){
@@ -202,6 +264,92 @@ nav p{
 .pip:nth-child(odd):last-child{
     grid-area:e;
 }
+
+.game-progress{
+    justify-items: center;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color:#ffffff;
+    /* border:1px solid red; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-radius: 1rem;
+    gap:1em
+}
+
+.game-progress p{
+    font-size: 0.75rem;
+    width:70px;
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 50%;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+    border-style: solid;
+    font-weight: 600;
+}
+
+
+.roll-current {
+    color:#059669;
+    border-color: #059669;
+    background-color: rgba(5, 150, 105, 0.2);
+}
+.time-current{
+    color:#ef4444;
+    border-color: #e53935;
+    background-color:rgba(229, 57, 53, 0.2)
+}
+.progress-current{
+    color:#3b82f6;
+    border-color: #1d4ed8;
+    position: relative;
+    
+}
+.progress-current div{
+    background-color:rgba(59, 130, 246, 0.2);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border:none;
+    position: absolute;
+    bottom: 0;
+}
+
+.game-progress p span{
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+
+
+.game-btn{
+    display:inline-block;
+    width:fit-content;
+    align-self: center;
+    padding: 1rem 1.5rem;
+    border-radius: 9999px;
+    background-color: #e53935;
+    color:#ffffff;
+    border:none;
+    cursor:pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 .shake-element {
     animation: shake 0.5s; 
