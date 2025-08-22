@@ -69,9 +69,9 @@ export default function MainComponent(props){
         if(props.gameWon){
             return null
         }
-        props.setDice((oldDice)=>{
-           return oldDice.map((die)=>{
-                if (die.id===id){
+        let arr=new Array(6).fill(0)
+        let updatedArr=props.dice.map((die)=>{
+            if (die.id===id){
                     return(
                         {
                             ...die, 
@@ -82,8 +82,20 @@ export default function MainComponent(props){
                 else{
                     return die
                 }
-            })
         })
+        props.setDice(updatedArr)
+
+        updatedArr.forEach((die)=>{
+            if(die.isHeld===true){
+                arr[die.value-1]=arr[die.value-1]+1
+            }
+        }
+        )
+
+         let x=Math.max(...arr)
+         console.log(Math.max(...arr))
+
+         setProgressBar(x)
 
         
     }
@@ -123,8 +135,37 @@ export default function MainComponent(props){
         
         let time=secondsToHms(props.time)
         let timeStyle={
-        fontSize:time.length>4?(time.length>11?"0.4rem":"0.7rem"):"1.5rem",
-    }
+            fontSize:time.length>4?(time.length>11?"0.4rem":"0.7rem"):"1.5rem",
+        }
+
+        
+        let progressBarFillCss={}
+        
+        switch (progressBar) {
+        case 0:
+            progressBarFillCss={height:"0%", width:"0%"}
+            break;
+        case 1:
+            progressBarFillCss={height:'10%' , width:'50%'};
+            break;
+        case 2:
+            progressBarFillCss={height:'20%', width:'70%'};
+            break;
+        case 3:
+            progressBarFillCss={height:'30%', width:'77%'};
+            break;
+        case 4:
+            progressBarFillCss={height:'40%', width:'84%'};
+            break;
+        case 5:
+            progressBarFillCss={height:'50%', width:'89%'};
+            break;
+        case 6:
+            progressBarFillCss={height:'60%', width:'95%'};
+            break;
+        default:
+            progressBarFillCss={height:`${progressBar}0%`, width:"100%"};
+        }
     // console.log(dice)
     return(
         <main className="hero-container">
@@ -136,9 +177,13 @@ export default function MainComponent(props){
                 {dieElements()}
             </div>
             <section className="game-progress" style={{visibility:startGame?"visible":"hidden"}}>
-                <p className="roll-current">Roll:<span>{props.count}</span></p>
-                <p className="time-current" >Time:<span style={timeStyle}>{time}</span></p>
-                <p className="progress-current">Progress:<span>3/10</span><div className="progress-fill"></div></p>
+                <div className="roll-current">Roll<span>{props.count}</span></div>
+                <div className="time-current" >Time<span style={timeStyle}>{time}</span></div>
+                <div className="progress-current">
+                    Progress
+                    <span>{progressBar}/10</span>
+                    <div className="progress-fill" style={progressBarFillCss}></div>
+                </div>
             </section>
             <button onClick={handleBtnClick} className="game-btn" >{startGame?props.gameWon?"PLAY AGAIN??":"ROLL DICE":"START GAME"}</button>
             {props.gameWon && <Confetti/>}
