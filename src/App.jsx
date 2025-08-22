@@ -30,13 +30,28 @@ export default function App(){
   }
   const gameWon=dice.every(die=>die.isHeld===true && die.value===dice[0].value)
 
+  let isRollRecordBroken=false
+  let isTimeRecordBroken=false
+  if(gameWon){
+    if(count<bestRoll){
+      isRollRecordBroken=true
+    }
+    if(time<bestTime){
+      isTimeRecordBroken=true
+    }
+  }
+  console.log(isRollRecordBroken)
+  console.log(isTimeRecordBroken)
+
   return(
     <div className={gameWon ? "topmost-container shake-element": "topmost-container"}>
       <Header count={count} setCount={setCount} time={time} setTime={setTime} gameWon={gameWon} 
-                    bestRoll={bestRoll} bestTime={bestTime} setBestRoll={setBestRoll} setBestTime={setBestTime}/>
+                    bestRoll={bestRoll} bestTime={bestTime} setBestRoll={setBestRoll} setBestTime={setBestTime}
+                    isRollRecordBroken={isRollRecordBroken} isTimeRecordBroken={isTimeRecordBroken}/>
 
       <MainComponent   count={count} setCount={setCount} time={time} setTime={setTime}
-                     dice={dice} setDice={setDice} getInitialDice={getInitialDice} gameWon={gameWon}/>
+                     dice={dice} setDice={setDice} getInitialDice={getInitialDice} gameWon={gameWon}
+                     isRollRecordBroken={isRollRecordBroken} isTimeRecordBroken={isTimeRecordBroken}/>
     </div>
   )
 }
