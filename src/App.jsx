@@ -2,6 +2,7 @@ import Header from './Header'
 import MainComponent from './MainComponent'
 import React from 'react'
 import { nanoid } from 'nanoid'
+import {motion} from 'framer-motion'
 
 export default function App(){
   const[dice,setDice]=React.useState(()=>getInitialDice())

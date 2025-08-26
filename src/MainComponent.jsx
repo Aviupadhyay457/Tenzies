@@ -3,6 +3,7 @@ import { nanoid } from "nanoid"
 import Die from "./Die"
 import multipleSound from "./assets/mulitple-dice-roll.mp3"
 import Confetti from 'react-confetti'
+import { motion } from "motion/react"
 
 export default function MainComponent(props){
     // const[dice,setDice]=React.useState(()=>getInitialDice())
@@ -34,8 +35,6 @@ export default function MainComponent(props){
 
     },[props.gameWon])
 
-
-    
     function secondsToHms(d) {
         if (d===0){
             return "0 s"
@@ -122,7 +121,7 @@ export default function MainComponent(props){
             SetShouldRunTimer(true)
         }
         else{
-            diceRollAudio.play()
+            // diceRollAudio.play()
             props.setDice((oldDice)=>{
                 return oldDice.map((die)=>{
                     if(die.isHeld===true){
@@ -172,7 +171,13 @@ export default function MainComponent(props){
         }
     // console.log(dice)
     return(
-        <main className="hero-container" style={{background:startGame?props.gameWon?"linear-gradient(145deg, #d1fae5, #a7f3d0)":"":"#ffffff"}}>
+        <motion.main className="hero-container"
+                initial={{backgroundColor:"light-blue"}}
+                animate={{
+                    background:startGame?props.gameWon?"linear-gradient(145deg, #d1fae5, #a7f3d0)":"":"#ffffff"
+                }}
+                transition={{duration:0.5,type:"spring",ease:"easeOut"}}
+                >
             <div className="begin-game-header">
                 <h2>{!startGame?"Ready To Play?":props.gameWon?"Congratulations, All Dice Match!!!":"Roll Your Dice"}</h2>
                 {startGame || <p>Click Start to Begin Your Tenzies Adventure!</p>}
@@ -189,8 +194,10 @@ export default function MainComponent(props){
                     <div className="progress-fill" style={progressBarFillCss}></div>
                 </div>
             </section>
-            <button onClick={handleBtnClick} className={startGame?"game-btn ":"game-btn start-game-btn"} >{startGame?props.gameWon?"PLAY AGAIN??":"ROLL DICE":"START GAME"}</button>
+            <button onClick={handleBtnClick} 
+                className={startGame?"game-btn ":"game-btn start-game-btn"} >
+                {startGame?props.gameWon?"PLAY AGAIN??":"ROLL DICE":"START GAME"}</button>
             {props.gameWon && <Confetti/>}
-        </main>
+        </motion.main>
     )
 }
